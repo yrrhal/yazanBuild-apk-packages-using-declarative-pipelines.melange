@@ -16,17 +16,17 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
         
-      - name: Install Termux/Android Dependencies
+      - name: Install Dependencies (Java, Zlib, Buildozer)
         run: |
-          apt-get update && apt-get install -y             build-essential             git             unzip             wget             curl             libxml2-dev             pkg-config default-jdk zlib1g-dev
+          apt-get update && apt-get install -y             build-essential             git             unzip             wget             curl             libxml2-dev             pkg-config             default-jdk             zlib1g-dev
             
           pip install buildozer
           pip install cython 
 
-
-      - name: Run Buildozer (THE FINAL FIX!)
-        # هذا هو الحل الأكيد لتجاوز خطأ التفاعل (EOFError)
-        run: echo "y" | buildozer android debug -s android.accept_sdk_licenses=True -s android.accept_sdk_licenses=True
+      - name: Run Buildozer (FINAL CONFIGURATION)
+        # 1. echo "y" | لحل مشكلة التفاعل (EOFError)
+        # 2. -s android.accept_sdk_licenses=True لحل مشكلة الترخيص
+        run: echo "y" | buildozer android debug -s android.accept_sdk_licenses=True
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
