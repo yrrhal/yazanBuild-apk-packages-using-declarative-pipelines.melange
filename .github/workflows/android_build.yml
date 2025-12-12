@@ -1,0 +1,45 @@
+name: Melange TCB - Android Build
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build_android:
+    # استخدام حاوية Docker لتوفير بيئة نظيفة وموحدة
+    # هذا يضمن أن يتم تثبيت جميع الأدوات بنفس الطريقة في كل مرة
+    runs-on: ubuntu-latest
+    container: 
+      image: python:3.10-slim # بيئة Python نظيفة ومستقرة
+    
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        
+      - name: Install Termux/Android Dependencies (inside Container)
+        # تثبيت الأدوات المطلوبة لتشغيل Buildozer بشكل عام
+        run: |
+          apt-get update && apt-get install -y             build-essential             git             unzip             wget             curl             libxml2-dev             pkg-config
+            
+          # تثبيت Buildozer والمكتبات المطلوبة
+          pip install buildozer
+          pip install cython # مطلوب لـ Kivy
+
+      - name: Set up Environment Variables (Important for Buildozer)
+        # تحديد المتغيرات البيئية بشكل صريح
+        run: |
+          export PATH="$HOME/.local/bin:$PATH"
+          echo "PATH=$PATH" >> $GITHUB_ENV
+          
+      - name: Run Buildozer (The Cloud Compilation Step)
+        # هذا الأمر يتطلب تحميل NDK/SDK داخلياً، مما يحل مشكلة المعمارية.
+        run: buildozer android debug
+
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Melange-TCB-APK
+          path: bin/*.apk
+          retention-days: 7
