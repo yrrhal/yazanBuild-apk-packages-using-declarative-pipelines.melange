@@ -35,7 +35,7 @@ jobs:
           
       - name: Run Buildozer (The Cloud Compilation Step)
         # هذا الأمر يتطلب تحميل NDK/SDK داخلياً، مما يحل مشكلة المعمارية.
-        run: buildozer android debug -s android.skip_root_check=yes
+        run: echo "y" | buildozer android debug
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
