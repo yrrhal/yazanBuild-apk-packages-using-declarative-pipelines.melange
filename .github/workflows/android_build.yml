@@ -18,7 +18,7 @@ jobs:
         
       - name: Install Termux/Android Dependencies
         run: |
-          apt-get update && apt-get install -y             build-essential             git             unzip             wget             curl             libxml2-dev             pkg-config
+          apt-get update && apt-get install -y             build-essential             git             unzip             wget             curl             libxml2-dev             pkg-config zlib1g-dev
             
           pip install buildozer
           pip install cython 
