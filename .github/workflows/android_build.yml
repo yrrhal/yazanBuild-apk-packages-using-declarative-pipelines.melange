@@ -23,6 +23,9 @@ jobs:
           pip install buildozer
           pip install cython 
 
+      - name: Accept Android SDK Licenses
+        run: echo "y" | $ANDROID_HOME/tools/bin/sdkmanager --licenses
+
       - name: Run Buildozer (THE FINAL FIX!)
         # هذا هو الحل الأكيد لتجاوز خطأ التفاعل (EOFError)
         run: echo "y" | buildozer android debug
