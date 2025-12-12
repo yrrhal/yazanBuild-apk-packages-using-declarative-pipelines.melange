@@ -34,8 +34,8 @@ jobs:
           echo "PATH=$PATH" >> $GITHUB_ENV
           
       - name: Run Buildozer (The Cloud Compilation Step)
+        run: buildozer android debug -s android.skip_root_check=yes
         # هذا الأمر يتطلب تحميل NDK/SDK داخلياً، مما يحل مشكلة المعمارية.
-        run: echo "y" | echo "y" | buildozer android debug
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
