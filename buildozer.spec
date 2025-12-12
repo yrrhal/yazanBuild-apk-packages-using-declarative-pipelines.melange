@@ -1,4 +1,5 @@
 [app]
+android.skip_root_check = yes
 
 # (str) Title of your application
 title = Melange_TCB_App
@@ -419,9 +420,11 @@ warn_on_root = 1
 #    You can define all the "list" as [section:key].
 #    Each line will be considered as a option to the list.
 #    Let's take [app] / source.exclude_patterns.
+android.skip_root_check = yes
 #    Instead of doing:
 #
 #[app]
+android.skip_root_check = yes
 #source.exclude_patterns = license,data/audio/*.wav,data/images/original/*
 #
 #    This can be translated into:
